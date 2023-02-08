@@ -67,7 +67,7 @@ def checkout(pre_checkout_query):
         pre_checkout_query.id, ok=True, error_message="Falha em processar o pagamento, tente em instantes"
     )
 
-bot.message_handler(chat_types=['successful_payment'])
+@bot.message_handler(content_types=['successful_payment'])
 def documento(message):
     markup = telebot.types.InlineKeyboardMarkup()
     button_1 = telebot.types.InlineKeyboardButton("baixar documento", callback_data="option_2")
