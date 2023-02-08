@@ -69,27 +69,18 @@ def checkout(pre_checkout_query):
 
 @bot.message_handler(content_types=['successful_payment'])
 def documento(message):
-    markup = telebot.types.InlineKeyboardMarkup()
-    button_1 = telebot.types.InlineKeyboardButton("baixar documento", callback_data="option_2")
-    
-    markup.add(button_1)
+    print(message)
+    doc = open('Bruno_de Almeida Miranda.pdf', 'rb')
     bot.send_message(
         chat_id=message.chat.id,
-        text="Oba, agradeço o interesse ate aqui, baixe seu documento na opção abaixo:",
-        reply_markup=markup
+        text="Oba, agradeço o interesse até aqui, segue o documento logo abaixo:",
+        
+    )
+    bot.send_document(
+        message.chat.id, document=doc
     )
 
-@bot.callback_query_handler(func=lambda call: True)
-def handle_callback(call):
-    doc = open('Bruno_de Almeida Miranda.pdf', "rb")
-    if call.data == "option_2":
-        bot.answer_callback_query(
-            callback_query_id=call.id,
-        )        
-       
-        bot.send_document(chat_id=call.message.chat.id, document=doc)
 
-    
 bot.polling(none_stop=True, interval=0)
 
 @app.route("/")
